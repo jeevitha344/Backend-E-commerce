@@ -129,10 +129,11 @@ USE_TZ = True
 STATIC_URL = 'static/'
 MEDIA_URL='/media/'
 MEDIA_ROOT=BASE_DIR/'media'
+
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://fullstack-ecommerce-km52.onrender.com"
+    "https://backend-e-commerce-nnnz.onrender.com"
 
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
