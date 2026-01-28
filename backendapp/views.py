@@ -7,13 +7,19 @@ from rest_framework import status
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
 class product_handlerapi(APIView):
+    
     parser_classes = [MultiPartParser, FormParser]
+    permission_classes = [IsAuthenticated]
     def post(self, request):
+        
         serializer = productserializer(data=request.data,context={"request": request})
+        print("FILES:", request.FILES)
+        print("DATA:", request.data)
 
         if serializer.is_valid():
             serializer.save()
