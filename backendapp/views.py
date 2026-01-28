@@ -11,8 +11,9 @@ from rest_framework.parsers import MultiPartParser, FormParser
 # Create your views here.
 
 class product_handlerapi(APIView):
+    parser_classes = [MultiPartParser, FormParser]
     def post(self, request):
-        serializer = productserializer(data=request.data)
+        serializer = productserializer(data=request.data,context={"request": request})
 
         if serializer.is_valid():
             serializer.save()
