@@ -69,13 +69,13 @@ class loginserializer(TokenObtainPairSerializer): # it automatically validate th
 # When access expires, frontend uses refresh token to get a new access:
 # axios.post('/api/token/refresh/', { refresh: localStorage.getItem("refresh") });
 
-class productserializer(serializers.ModelSerializer):
+class productserializer_order(serializers.ModelSerializer):
     class Meta:
         model=product_details
         fields=('id','product_name','product_price','product_image')
 
 class orderproductserializer(serializers.ModelSerializer):
-     product=productserializer(read_only=True) #Converts the saved product object into full product details
+     product=productserializer_order(read_only=True) #Converts the saved product object into full product details
 
      product_id = serializers.PrimaryKeyRelatedField(
         queryset=product_details.objects.all(),
