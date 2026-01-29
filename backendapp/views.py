@@ -14,8 +14,8 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 class product_handlerapi(APIView):
     
     parser_classes = [MultiPartParser, FormParser]
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    # authentication_classes = [JWTAuthentication]
+    # permission_classes = [IsAuthenticated]
     def post(self, request):
         
         serializer = productserializer(data=request.data,context={"request": request})
