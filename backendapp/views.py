@@ -31,7 +31,7 @@ class product_handlerapi(APIView):
     def get(self,request,productid=None):
         if productid:
             product=product_details.objects.get(id=productid)
-            serializer=productserializer(product)
+            serializer=productserializer(product,context={"request": request})
             return Response(serializer.data,status=status.HTTP_200_OK)
         else:
             product=product_details.objects.all()
