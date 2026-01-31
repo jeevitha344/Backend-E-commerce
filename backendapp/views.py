@@ -31,7 +31,7 @@ class product_handlerapi(APIView):
     def get(self,request,productid=None):
         if productid:
             product=product_details.objects.get(id=productid)
-            serializer=productserializer(product,context={"request": request})
+            serializer=productserializer(product,context={'request': request})
             return Response(serializer.data,status=status.HTTP_200_OK)
         else:
             product=product_details.objects.all()
@@ -39,9 +39,11 @@ class product_handlerapi(APIView):
             return Response(serializer.data,status=status.HTTP_200_OK)
 
     def put(self,request,productid=None):
+        print("PUT DATA:", request.data)
+        print("PUT FILES:", request.FILES)
         if productid:
             product=product_details.objects.get(id=productid)
-            serializer=productserializer(product,data=request.data,partial=True )
+            serializer=productserializer(product,data=request.data,partial=True, context={'request': request})
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data,status=status.HTTP_200_OK)
@@ -126,7 +128,7 @@ class orderapi(APIView):
         if pk:
             try:
                 order_obj = Order.objects.get(id=pk, user=request.user)
-                serializer = Orderserializer(order_obj)
+                serializer = Orderserializer(order_obj,context={'request': request})
                 return Response(serializer.data)
             except Order.DoesNotExist:
                 return Response({"error": "Order not found"}, status=404)
@@ -137,7 +139,7 @@ class orderapi(APIView):
             total_users = User.objects.count()
             orders = Order.objects.all()
             
-            serializer = Orderserializer(orders, many=True)
+            serializer = Orderserializer(orders, many=True,context={'request': request})
             return Response({"data":serializer.data,"total_users":total_users})
 
 # class orderproductapi(APIView):
