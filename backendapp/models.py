@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
-
+from cloudinary.models import CloudinaryField
 class product_categorytb(models.Model):
     id=models.AutoField(primary_key=True)
     category=models.CharField(max_length=100)
@@ -14,8 +14,7 @@ class product_details(models.Model):
     product_name=models.CharField(max_length=100)
     product_description=models.CharField(max_length=200)
     product_price=models.IntegerField()
-    product_image=models.ImageField(upload_to='images/',null=True,
-    blank=True)
+    product_image = CloudinaryField('image')
     product_category=models.ForeignKey(product_categorytb, on_delete=models.CASCADE)
 
     def __str__(self):

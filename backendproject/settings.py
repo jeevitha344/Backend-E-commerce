@@ -17,8 +17,7 @@ from dotenv import load_dotenv
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
+load_dotenv(os.path.join(BASE_DIR, '.envo'))
 
 
 
@@ -31,12 +30,16 @@ SECRET_KEY = 'django-insecure-9vs=oe+)p9cqg34q@iy)=yf)ey%0rh(p3d8)-$e-9yjb=tbt^8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS=["*"]
+ALLOWED_HOSTS=["backend-e-commerce-nnnz.onrender.com",
+    "localhost",
+    "127.0.0.1"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+     'cloudinary',
+    'cloudinary_storage',
     'rest_framework_simplejwt',
     'corsheaders',
     'rest_framework',
@@ -48,7 +51,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+}
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -127,8 +135,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
-MEDIA_URL='/media/'
-MEDIA_ROOT=BASE_DIR/'media'
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR / 'media'
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
