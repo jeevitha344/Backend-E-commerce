@@ -8,15 +8,21 @@ class productserializer(serializers.ModelSerializer):
     product_category = serializers.PrimaryKeyRelatedField(
     queryset=product_categorytb.objects.all()
 )
-    # product_image = serializers.SerializerMethodField()  # <-- add this
+    # product_image= serializers.SerializerMethodField(read_only=True) # <-- add this
     class Meta:
         model = product_details
         fields = "__all__"
 
     # def get_product_image(self, obj):
-    #     if obj.product_image:
-    #         return obj.product_image.url  # <-- this returns the Cloudinary URL
-    #     return ""
+    #     if not obj.product_image:
+    #         return None
+
+    #     url = str(obj.product_image)
+
+    #     if url.startswith("http"):
+    #         return url
+
+    #     return f"https://res.cloudinary.com/ddthskmqv/{url}"
    
 class ProductCategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -75,9 +81,22 @@ class loginserializer(TokenObtainPairSerializer): # it automatically validate th
 # axios.post('/api/token/refresh/', { refresh: localStorage.getItem("refresh") });
 
 class productserializer_order(serializers.ModelSerializer):
+    # product_image = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model=product_details
         fields=('id','product_name','product_price','product_image')
+        
+    # def get_product_image(self, obj):
+    #     if not obj.product_image:
+    #         return None
+
+    #     url = str(obj.product_image)
+
+    #     if url.startswith("http"):
+    #         return url
+
+    #     return f"https://res.cloudinary.com/ddthskmqv/{url}"
 
 class orderproductserializer(serializers.ModelSerializer):
      product=productserializer_order(read_only=True) #Converts the saved product object into full product details
